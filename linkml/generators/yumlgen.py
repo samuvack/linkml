@@ -104,7 +104,10 @@ class YumlGenerator(Generator):
                 else:
                     self.logger.error(f"{resp.reason} accessing {url}: {resp!r}")
         else:
-            print(str(YUML) + ",".join(yumlclassdef), end="")
+            yuml_text = str(YUML) + ",".join(yumlclassdef)
+            print(yuml_text)
+            
+            
 
     def class_box(self, cn: ClassDefinitionName) -> str:
         """Generate a box for the class.  Populate its interior only if (a) it hasn't previously been generated and

@@ -306,9 +306,13 @@ def cli(yamlfile, classes: List[str], max_hops: Optional[int], follow_references
         **args,
     )
     if classes:
-        print(gen.serialize_classes(classes, follow_references=follow_references, max_hops=max_hops))
+        mermaid_text = gen.serialize_classes(classes, follow_references=follow_references, max_hops=max_hops)
+        with open('mermaid.md', 'w') as f:
+            f.write(mermaid_text)
     else:
-        print(gen.serialize())
+        mermaid_text = gen.serialize()
+        with open('mermaid.md', 'w') as f:
+            f.write(mermaid_text)
 
 
 if __name__ == "__main__":
