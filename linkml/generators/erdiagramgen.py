@@ -149,7 +149,8 @@ class ERDiagramGenerator(Generator):
         :return: mermaid string
         """
         sv = self.schemaview
-        structural_roots = [cn for cn, c in sv.all_classes().items() if c.tree_root]
+        structural_roots = [cn for cn,
+                            c in sv.all_classes().items() if c.tree_root]
         if self.structural and structural_roots:
             return self.serialize_classes(structural_roots, follow_references=True)
         else:
@@ -206,7 +207,7 @@ class ERDiagramGenerator(Generator):
         """
         er = str(diagram)
         if self.format == "markdown":
-            return f"```mermaid\n{er}\n```\n"
+            return f"""```mermaid\n %%{{init: {{'theme':'forest'}}}}%% \n{er}\n```\n"""
         else:
             return er
 
@@ -306,8 +307,10 @@ def cli(yamlfile, classes: List[str], max_hops: Optional[int], follow_references
         **args,
     )
     if classes:
-        mermaid_text = gen.serialize_classes(classes, follow_references=follow_references, max_hops=max_hops)
-        with open('mermaid.md', 'w') as f:
+        mermaid_text = gen.serialize_classes(
+            classes, follow_references=follow_references, max_hops=max_hops)
+        print(mermaid_text)
+        with open('/mermaid.md', 'w') as f:
             f.write(mermaid_text)
     else:
         mermaid_text = gen.serialize()
